@@ -1,7 +1,26 @@
 import React, {Component} from 'react';
+import { throwStatement } from '@babel/types';
 
 class NewComment extends Component {
-    state = {}
+
+    state = {
+        message: {
+            username: '',
+            emailaddress: '',
+            textmessage: ''
+        }
+
+    }
+
+    handleInputChange = e => {
+        this.setState({
+            message: {
+                ...this.state.message,
+                [e.target.name]: e.target.value
+            }
+        })
+    }
+
     render() {
         return (
             <div className='card mt-5 py-5'>
@@ -9,7 +28,13 @@ class NewComment extends Component {
                     <form>
                         <div className='form-group row'>
                             <div className='col-sm-8 col-lg-12'>
-                                <input type='text' className='form-control' placeholder='Nombre' name='name'/>
+                                <input
+                                    type='text'
+                                    className='form-control'
+                                    placeholder='Nombre'
+                                    name='username'
+                                    value={this.state.username}
+                                    onChange={this.handleInputChange}/>
                             </div>
 
                         </div>
@@ -19,7 +44,9 @@ class NewComment extends Component {
                                     type='email'
                                     className='form-control'
                                     placeholder='Email'
-                                    name='emailaddress'/>
+                                    name='emailaddress'
+                                    value={this.state.emailaddress}
+                                    onChange={this.handleInputChange}/>
                             </div>
                         </div>
                         <div className='form-group row'>
@@ -28,11 +55,16 @@ class NewComment extends Component {
                                     type='text'
                                     className='form-control'
                                     placeholder='Mensaje'
-                                    name='message'/>
+                                    name='textmessage'
+                                    value={this.state.textmessage}
+                                    onChange={this.handleInputChange}/>
                             </div>
                         </div>
 
-                        <input type='submit' className='py-3 mt-2 btn btn-success btn-block' value='Enviar'/>
+                        <input
+                            type='submit'
+                            className='py-3 mt-2 btn btn-success btn-block'
+                            value='Enviar'/>
                     </form>
                 </div>
             </div>
