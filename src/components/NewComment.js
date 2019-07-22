@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { throwStatement } from '@babel/types';
+import uuid from 'uuid';
 
 class NewComment extends Component {
 
@@ -8,7 +8,8 @@ class NewComment extends Component {
             username: '',
             emailaddress: '',
             textmessage: ''
-        }
+        },
+        error: 'false'
 
     }
 
@@ -21,11 +22,29 @@ class NewComment extends Component {
         })
     }
 
+    handleFormSubmit = e => {
+        e.preventDefault();
+        const {username, emailaddress, textmessage} = this.state.message;
+        if (username === '' || emailaddress === '' || textmessage === '') {
+            this.setState({error: true})
+            return;
+        }
+
+        const newComment = {
+            ...this.state.message
+        };
+        newComment.id = uuid();
+
+        this
+            .props
+            .createNewComment(newComment);
+    }
+
     render() {
         return (
             <div className='card mt-5 py-5'>
                 <div className='card-body'>
-                    <form>
+                    <form onSubmit={this.handleFormSubmit}>
                         <div className='form-group row'>
                             <div className='col-sm-8 col-lg-12'>
                                 <input
